@@ -69,7 +69,9 @@ async function processMessage(url) {
         let wiki = async() => {
             // launch puppeteer
             const browser = await puppeteer.launch({
-                executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+                // if you uncomment below it will open in google chrome instead of chromium but you will need 
+                // to check that your path to chrome on your computer matches bc it could be diff
+                // executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
                 headless: false,
             });
             const page = await browser.newPage();
