@@ -72,13 +72,37 @@ async function processMessage(url) {
                 // if you uncomment below it will open in google chrome instead of chromium but you will need 
                 // to check that your path to chrome on your computer matches bc it could be diff
                 // executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-                headless: false,
+                // if headless is set to false, you will the a window pop up containing the page being scraped
+                headless: true,
             });
             const page = await browser.newPage();
             await page.goto(url);
             await page.queryObjects
             // scrape the table rows
             const table = await page.$$eval("table.infobox.biota > tbody > tr", rows => rows.map(row => row.innerText))
+
+            /*
+            commented this out bc it ended up being unecessary, but it will scrape the images in the wikipedia biota box
+      
+            // find out which pics are in the biota box
+            const pic = await page.$$eval("table.infobox.biota a.image", rows => rows.map(row => row.innerHTML))
+            // scrape every image url
+            const images = await page.evaluate(() => Array.from(document.images, e => e.src));
+
+            const imagesArray = [];
+      
+            // if the url is in the box, add it to the array
+            for (i=0;i<pic.length;i++)
+            {
+                for (j=0;j<images.length;j++)
+                {
+                    if (pic[i].includes(images[j].substring(6,images[j].length)))
+                        {
+                            imagesArray.push(images[j]);
+                        }
+                }
+            }
+            */
     
             // create new array for the parsed table
             const parsedArray = [];
@@ -115,10 +139,11 @@ async function processMessage(url) {
     if (url.includes("pokemon.gameinfo")) {
         let pokemon = async() => {
             const browser = await puppeteer.launch({
-                // if you uncomment below it will open in google chrome instead of chromium but you will need 
+                // if you uncomment below it will open in google chrome instead of chromium but you will need
                 // to check that your path to chrome on your computer matches bc it could be diff
                 // executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-                headless: false,
+                // if headless is set to false, you will the a window pop up containing the page being scraped
+                headless: true,
             });
             const page = await browser.newPage();
             await page.goto(url);
